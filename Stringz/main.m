@@ -29,9 +29,19 @@ int main(int argc, const char *argv[])
       NSLog(@"done writing /tmp/cool.txt");
     else
       NSLog(@"writing /tmp/cool.txt failed %@", [error localizedDescription]);
-
     
-    // pass the NSError pointer by reference to the NSString method
+    // read a string in from a file
+    NSString *str1 = [[NSString alloc] initWithContentsOfFile:@"/etc/resolv.conf" encoding:NSASCIIStringEncoding error:&error];
+    
+    if (!str1)
+    {
+      NSLog(@"read failed: %@", [error localizedDescription]);
+    }
+    else
+    {
+      NSLog(@"resolve.conf looks like this: %@", str1);
+    }
+    
   } // @autoreleasepool
     return 0;
 } // main()
