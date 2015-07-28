@@ -19,8 +19,19 @@ int main(int argc, const char *argv[])
       [str appendString:@"Aaron is cool\n"];
     }
     
-    [str writeToFile:@"/tmp/cool.txt" atomically:YES encoding:NSUTF8StringEncoding error:NULL];
-    NSLog(@"done writing /tmp/cool.txt");
+    // declare a pointer to an NSError object, but don't instantiate it.
+    // The NSError instance will only be created if there is, in fact, an error.
+    NSError *error;
+    
+    BOOL success = [str writeToFile:@"/too/darned/bad.txt" atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    
+    if (success)
+      NSLog(@"done writing /tmp/cool.txt");
+    else
+      NSLog(@"writing /tmp/cool.txt failed %@", [error localizedDescription]);
+
+    
+    // pass the NSError pointer by reference to the NSString method
   } // @autoreleasepool
     return 0;
 } // main()
